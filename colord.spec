@@ -18,7 +18,7 @@ BuildRequires:	intltool
 BuildRequires:	lcms2-devel
 BuildRequires:	libgudev-devel
 BuildRequires:	libusb1-devel
-BuildRequires:	polkit-devel
+BuildRequires:	polkit-1-devel
 BuildRequires:	sane-devel
 BuildRequires:	sqlite-devel
 BuildRequires:	gobject-introspection-devel
