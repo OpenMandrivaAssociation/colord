@@ -22,7 +22,7 @@ BuildRequires:	pkgconfig(gudev-1.0)
 BuildRequires:	pkgconfig(lcms2)
 BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(polkit-gobject-1)
-BuildRequires:	pkgconfig(sqlite)
+BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	sane-devel
 BuildRequires:	vala-tools
 
