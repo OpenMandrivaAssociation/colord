@@ -6,7 +6,7 @@
 
 Summary:	Color daemon
 Name:		colord
-Version:	0.1.18
+Version:	0.1.19
 Release:	1
 License:	GPLv2+ and LGPLv2+
 Group:		System/X11
@@ -42,7 +42,6 @@ Main library for %{name}.
 %package -n %{girname}
 Summary:	GObject Introspection interface description for %{name}
 Group:		System/Libraries
-Requires:	%{libname} = %{version}-%{release}
 
 %description -n %{girname}
 GObject Introspection interface description for %{name}.
@@ -51,6 +50,7 @@ GObject Introspection interface description for %{name}.
 Summary:	Development package for %{name}
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
+Requires:	%{girname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n %{develname}
