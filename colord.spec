@@ -83,18 +83,22 @@ touch %{buildroot}%{_localstatedir}/lib/colord/storage.db
 %files -f %{name}.lang
 %doc README AUTHORS NEWS
 %config %{_sysconfdir}/colord.conf
-%dir %{_localstatedir}/lib/colord
-%dir %{_datadir}/color/icc/colord
+%{_sysconfdir}/dbus-1/system.d/org.freedesktop.colord-sane.conf
+%{_sysconfdir}/dbus-1/system.d/org.freedesktop.ColorManager.conf
 /lib/udev/rules.d/*.rules
 %{_bindir}/*
 %{_libdir}/colord
+%{_libdir}/colord-sane
 %{_libdir}/colord-sensors
-%{_sysconfdir}/dbus-1/system.d/org.freedesktop.ColorManager.conf
-%{_datadir}/dbus-1/interfaces/org.freedesktop.ColorManager*.xml
-%{_datadir}/polkit-1/actions/org.freedesktop.color.policy
-%{_datadir}/dbus-1/system-services/org.freedesktop.ColorManager.service
-%{_datadir}/man/man1/*.1.*
+%dir %{_datadir}/color/icc/colord
 %{_datadir}/color/icc/colord/*.ic?
+%{_datadir}/dbus-1/interfaces/org.freedesktop.colord.sane.xml
+%{_datadir}/dbus-1/interfaces/org.freedesktop.ColorManager*.xml
+%{_datadir}/dbus-1/system-services/org.freedesktop.colord-sane.service
+%{_datadir}/dbus-1/system-services/org.freedesktop.ColorManager.service
+%{_datadir}/polkit-1/actions/org.freedesktop.color.policy
+%{_datadir}/man/man1/*.1.*
+%dir %{_localstatedir}/lib/colord
 %ghost %{_localstatedir}/lib/colord/*.db
 
 %files -n %{libname}
