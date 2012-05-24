@@ -6,7 +6,7 @@
 
 Summary:	Color daemon
 Name:		colord
-Version:	0.1.19
+Version:	0.1.21
 Release:	1
 License:	GPLv2+ and LGPLv2+
 Group:		System/X11
@@ -61,6 +61,8 @@ Files for development with %{name}.
 
 %build
 %configure \
+	--with-daemon-user=colord \
+	--with-systemdsystemunitdir=%{_systemunitdir} \
 	--disable-static \
 	--disable-rpath \
 	--disable-examples \
@@ -79,6 +81,13 @@ touch %{buildroot}%{_localstatedir}/lib/colord/mapping.db
 touch %{buildroot}%{_localstatedir}/lib/colord/storage.db
 
 %find_lang %{name}
+
+%pre
+getent group colord >/dev/null || groupadd -r colord
+getent passwd colord >/dev/null || \
+     useradd -r -g colord -d /var/lib/colord -s /sbin/nologin \
+     -c "User for colord" colord
+exit 0
 
 %files -f %{name}.lang
 %doc README AUTHORS NEWS
@@ -100,6 +109,8 @@ touch %{buildroot}%{_localstatedir}/lib/colord/storage.db
 %{_datadir}/man/man1/*.1.*
 %dir %{_localstatedir}/lib/colord
 %ghost %{_localstatedir}/lib/colord/*.db
+%{_sysconfdir}/bash_completion.d/*-completion.bash
+%{_systemunitdir}/*.service
 
 %files -n %{libname}
 %{_libdir}/libcolord.so.%{major}*
