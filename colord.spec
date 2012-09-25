@@ -6,7 +6,7 @@
 
 Summary:	Color daemon
 Name:		colord
-Version:	0.1.21
+Version:	0.1.23
 Release:	1
 License:	GPLv2+ and LGPLv2+
 Group:		System/X11
@@ -25,8 +25,11 @@ BuildRequires:	pkgconfig(polkit-gobject-1)
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	sane-devel
 BuildRequires:	vala-tools
+BuildRequires:	gtk-doc
 
+Requires(pre,postun):	rpm-helper
 Requires:	shared-color-profiles
+Requires:	systemd-units
 
 %description
 colord is a low level system activated daemon that maps color devices
@@ -51,7 +54,7 @@ Summary:	Development package for %{name}
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Requires:	%{girname} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
+Provides:	%{name}-devel = %{EVRD}
 
 %description -n %{develname}
 Files for development with %{name}.
@@ -83,11 +86,12 @@ touch %{buildroot}%{_localstatedir}/lib/colord/storage.db
 %find_lang %{name}
 
 %pre
-getent group colord >/dev/null || groupadd -r colord
-getent passwd colord >/dev/null || \
-     useradd -r -g colord -d /var/lib/colord -s /sbin/nologin \
-     -c "User for colord" colord
-exit 0
+%_pre_useradd colord /var/lib/colord /sbin/nologin
+%_pre_groupadd colord colord
+
+%postun
+%_postun_userdel colord
+%_postun_groupdel colord
 
 %files -f %{name}.lang
 %doc README AUTHORS NEWS
@@ -107,7 +111,8 @@ exit 0
 %{_datadir}/dbus-1/system-services/org.freedesktop.ColorManager.service
 %{_datadir}/polkit-1/actions/org.freedesktop.color.policy
 %{_datadir}/man/man1/*.1.*
-%dir %{_localstatedir}/lib/colord
+%attr(755,colord,colord) %dir %{_localstatedir}/lib/colord
+%attr(755,colord,colord) %dir %{_localstatedir}/lib/colord/icc
 %ghost %{_localstatedir}/lib/colord/*.db
 %{_sysconfdir}/bash_completion.d/*-completion.bash
 %{_systemunitdir}/*.service
