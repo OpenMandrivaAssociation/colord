@@ -63,7 +63,7 @@ Files for development with %{name}.
 %setup -q
 
 %build
-%configure \
+%configure2_5x \
 	--with-daemon-user=colord \
 	--with-systemdsystemunitdir=%{_systemunitdir} \
 	--disable-static \
