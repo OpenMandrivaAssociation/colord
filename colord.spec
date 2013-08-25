@@ -4,16 +4,13 @@
 %define	libname %mklibname %{name} %{major}
 %define	libpriv	%mklibname colordprivate %{major}
 %define	libhug	%mklibname colorhug %{major}
-%define	libdtp	%mklibname dtp94-private %{privmaj}
-%define	libhuey	%mklibname huey-private %{privmaj}
-%define	libmunki %mklibname munki-private %{privmaj}
 %define	girname	%mklibname %{name}-gir %{api}
 %define	girhug	%mklibname colorhug-gir %{api}
 %define	devname	%mklibname %{name} -d
 
 Summary:	Color daemon
 Name:		colord
-Version:	0.1.30
+Version:	1.0.2
 Release:	1
 License:	GPLv2+ and LGPLv2+
 Group:		System/X11
@@ -66,27 +63,6 @@ Group:		System/Libraries
 %description -n %{libhug}
 Main library for %{name}.
 
-%package -n %{libdtp}
-Summary:	Library package for %{name}
-Group:		System/Libraries
-
-%description -n %{libdtp}
-Main library for %{name}.
-
-%package -n %{libhuey}
-Summary:	Library package for %{name}
-Group:		System/Libraries
-
-%description -n %{libhuey}
-Main library for %{name}.
-
-%package -n %{libmunki}
-Summary:	Library package for %{name}
-Group:		System/Libraries
-
-%description -n %{libmunki}
-Main library for %{name}.
-
 %package -n %{girname}
 Summary:	GObject Introspection interface description for %{name}
 Group:		System/Libraries
@@ -107,9 +83,6 @@ Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Requires:	%{libpriv} = %{version}-%{release}
 Requires:	%{libhug} = %{version}-%{release}
-Requires:	%{libdtp} = %{version}-%{release}
-Requires:	%{libhuey} = %{version}-%{release}
-Requires:	%{libmunki} = %{version}-%{release}
 Requires:	%{girname} = %{version}-%{release}
 Requires:	%{girhug} = %{version}-%{release}
 Provides:	%{name}-devel = %{EVRD}
@@ -156,7 +129,7 @@ touch %{buildroot}%{_localstatedir}/lib/colord/storage.db
 %files -f %{name}.lang
 %doc README AUTHORS NEWS
 %config(noreplace) %{_sysconfdir}/colord.conf
-%{_sysconfdir}/bash_completion.d/*-completion.bash
+%{_datadir}/bash-completion/completions/colormgr
 %{_sysconfdir}/dbus-1/system.d/org.freedesktop.ColorManager.conf
 /lib/udev/rules.d/*.rules
 %{_bindir}/*
@@ -189,15 +162,6 @@ touch %{buildroot}%{_localstatedir}/lib/colord/storage.db
 
 %files -n %{libhug}
 %{_libdir}/libcolorhug.so.%{major}*
-
-%files -n %{libdtp}
-%{_libdir}/libdtp94-private.so.%{privmaj}*
-
-%files -n %{libhuey}
-%{_libdir}/libhuey-private.so.%{privmaj}*
-
-%files -n %{libmunki}
-%{_libdir}/libmunki-private.so.%{privmaj}*
 
 %files -n %{girname}
 %{_libdir}/girepository-1.0/Colord-%{api}.typelib

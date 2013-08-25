@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   colord-0.1.23.tar.xz: 08019c86f89b1675e4e155772cc555ed748f319e
+sources:
+  colord-1.0.2.tar.xz: 081ce4457e9752c726e68820b1b079ab314093a0
