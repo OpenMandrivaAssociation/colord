@@ -8,6 +8,16 @@
 %define	girhug	%mklibname colorhug-gir %{api}
 %define	devname	%mklibname %{name} -d
 
+
+# Building the extra print profiles requires colprof, +4Gb of RAM and
+# quite a lot of time. Don't enable this for test builds.
+%bcond_with print_profiles
+
+# SANE is pretty insane when it comes to handling devices, and we get AVCs
+# popping up all over the place.
+%bcond_with	sane
+
+
 Summary:	Color daemon
 Name:		colord
 Version:	1.0.2
@@ -26,6 +36,7 @@ BuildRequires:	vala-tools
 BuildRequires:	sane-devel
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(glib-2.0)
+BuildRequires:	pkgconfig(bash-completion)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:	pkgconfig(gudev-1.0)
 BuildRequires:	pkgconfig(gusb)
@@ -96,12 +107,22 @@ Files for development with %{name}.
 %build
 export CFLAGS='-fPIC %optflags'
 export LDFLAGS='-pie -Wl,-z,now -Wl,-z,relro'
+%ifnarch %arm
 ulimit -Sv 2000000
+%endif
 %configure2_5x \
 	--with-daemon-user=colord \
 	--with-systemdsystemunitdir=%{_systemunitdir} \
 	--enable-sane \
+%if %{with print_profiles}
+        --enable-print-profiles \
+%else
+	--disable-print-profiles \
+%endif
 	--enable-vala \
+%if %{with sane}
+        --enable-sane \
+%endif
 	--disable-static \
 	--disable-rpath \
 	--disable-examples \
