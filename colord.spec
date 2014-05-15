@@ -26,7 +26,6 @@ License:	GPLv2+ and LGPLv2+
 Group:		System/X11
 Url:		http://www.freedesktop.org/software/colord/
 Source0:	http://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz
-Source1:	http://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz.sha1
 
 BuildRequires:	docbook-utils
 BuildRequires:	gettext
