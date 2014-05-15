@@ -1,5 +1,5 @@
-%define	major	1
-%define	privmaj	0
+%define	major 2
+%define	privmaj 0
 %define	api 1.0
 %define	libname %mklibname %{name} %{major}
 %define	libpriv	%mklibname colordprivate %{major}
