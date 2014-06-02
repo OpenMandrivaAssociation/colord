@@ -147,7 +147,7 @@ touch %{buildroot}%{_localstatedir}/lib/colord/storage.db
 %_postun_groupdel colord
 
 %files -f %{name}.lang
-%doc README AUTHORS NEWS
+%doc AUTHORS NEWS
 %{_datadir}/bash-completion/completions/colormgr
 %{_sysconfdir}/dbus-1/system.d/org.freedesktop.ColorManager.conf
 /lib/udev/rules.d/*.rules
