@@ -32,7 +32,9 @@ BuildRequires:	gettext
 BuildRequires:	gtk-doc
 BuildRequires:	intltool
 BuildRequires:	vala-tools
+%if %{with sane}
 BuildRequires:	sane-devel
+%endif
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(bash-completion)
@@ -113,7 +115,6 @@ ulimit -Sv 2000000
 %configure2_5x \
 	--with-daemon-user=colord \
 	--with-systemdsystemunitdir=%{_systemunitdir} \
-	--enable-sane \
 %if %{with print_profiles}
         --enable-print-profiles \
 %else
@@ -154,7 +155,9 @@ touch %{buildroot}%{_localstatedir}/lib/colord/storage.db
 /lib/udev/rules.d/*.rules
 %{_bindir}/*
 %{_libexecdir}/colord
+%if %{with sane}
 %{_libexecdir}/colord-sane
+%endif
 %{_libexecdir}/colord-session
 %{_libdir}/colord-plugins/*.so
 %{_libdir}/colord-sensors/*.so
