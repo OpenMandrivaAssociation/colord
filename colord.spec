@@ -20,8 +20,8 @@
 
 Summary:	Color daemon
 Name:		colord
-Version:	1.1.7
-Release:	3
+Version:	1.2.4
+Release:	1
 License:	GPLv2+ and LGPLv2+
 Group:		System/X11
 Url:		http://www.freedesktop.org/software/colord/
@@ -166,6 +166,9 @@ touch %{buildroot}%{_localstatedir}/lib/colord/storage.db
 %{_datadir}/color/icc/colord/*.ic?
 %{_datadir}/colord/icons/*.svg
 %{_datadir}/colord/ti1/*.ti1
+%{_datadir}/colord/illuminant
+%{_datadir}/colord/cmf
+%{_datadir}/colord/ref
 %{_datadir}/dbus-1/interfaces/org.freedesktop.ColorHelper.xml
 %{_datadir}/dbus-1/interfaces/org.freedesktop.ColorManager*.xml
 %{_datadir}/dbus-1/services/org.freedesktop.ColorHelper.service
