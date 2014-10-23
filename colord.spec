@@ -21,7 +21,7 @@
 Summary:	Color daemon
 Name:		colord
 Version:	1.2.4
-Release:	1
+Release:	2
 License:	GPLv2+ and LGPLv2+
 Group:		System/X11
 Url:		http://www.freedesktop.org/software/colord/
@@ -51,6 +51,13 @@ BuildRequires:	pkgconfig(libsystemd-login)
 Requires(pre,postun):	rpm-helper
 Requires:	shared-color-profiles
 Requires:	systemd-units
+
+# obsolete separate profiles package
+Obsoletes: shared-color-profiles <= 0.1.6-10
+Provides: shared-color-profiles
+# obsolete separate profiles package
+Obsoletes: shared-color-profiles-extra <= 0.1.6-10
+Provides: shared-color-profiles-extra
 
 %description
 colord is a low level system activated daemon that maps color devices
@@ -113,7 +120,7 @@ export LDFLAGS='-pie -Wl,-z,now -Wl,-z,relro'
 %ifnarch %arm
 ulimit -Sv 2000000
 %endif
-%configure2_5x \
+%configure \
 	--with-daemon-user=colord \
 	--with-systemdsystemunitdir=%{_systemunitdir} \
 %if %{with print_profiles}
@@ -125,7 +132,6 @@ ulimit -Sv 2000000
 %if %{with sane}
         --enable-sane \
 %endif
-	--disable-static \
 	--disable-rpath \
 	--disable-examples \
 	--disable-dependency-tracking
