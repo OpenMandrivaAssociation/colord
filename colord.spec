@@ -1,13 +1,12 @@
-%define	major 2
-%define	privmaj 0
-%define	api 1.0
-%define	libname %mklibname %{name} %{major}
-%define	libpriv	%mklibname colordprivate %{major}
-%define	libhug	%mklibname colorhug %{major}
-%define	girname	%mklibname %{name}-gir %{api}
-%define	girhug	%mklibname colorhug-gir %{api}
-%define	devname	%mklibname %{name} -d
-
+%define major 2
+%define privmaj 0
+%define api 1.0
+%define libname %mklibname %{name} %{major}
+%define libpriv %mklibname colordprivate %{major}
+%define libhug %mklibname colorhug %{major}
+%define girname %mklibname %{name}-gir %{api}
+%define girhug %mklibname colorhug-gir %{api}
+%define devname %mklibname %{name} -d
 
 # Building the extra print profiles requires colprof, +4Gb of RAM and
 # quite a lot of time. Don't enable this for test builds.
@@ -15,13 +14,12 @@
 
 # SANE is pretty insane when it comes to handling devices, and we get AVCs
 # popping up all over the place.
-%bcond_with	sane
-
+%bcond_with sane
 
 Summary:	Color daemon
 Name:		colord
-Version:	1.2.4
-Release:	6
+Version:	1.3.1
+Release:	1
 License:	GPLv2+ and LGPLv2+
 Group:		System/X11
 Url:		http://www.freedesktop.org/software/colord/
@@ -50,14 +48,13 @@ BuildRequires:	pkgconfig(libsystemd-login)
 
 Requires(pre,postun):	rpm-helper
 Requires:	shared-color-profiles
-Requires:	systemd-units
 
 # obsolete separate profiles package
-Obsoletes: shared-color-profiles <= 0.1.6-10
-Provides: shared-color-profiles
+Obsoletes:	shared-color-profiles <= 0.1.6-10
+Provides:	shared-color-profiles = %{EVRD}
 # obsolete separate profiles package
-Obsoletes: shared-color-profiles-extra <= 0.1.6-10
-Provides: shared-color-profiles-extra
+Obsoletes:	shared-color-profiles-extra <= 0.1.6-10
+Provides:	shared-color-profiles-extra = %{EVRD}
 
 %description
 colord is a low level system activated daemon that maps color devices
@@ -120,6 +117,7 @@ export LDFLAGS='-pie -Wl,-z,now -Wl,-z,relro'
 %ifnarch %arm
 ulimit -Sv 2000000
 %endif
+
 %configure \
 	--with-daemon-user=colord \
 	--with-systemdsystemunitdir=%{_systemunitdir} \
@@ -208,4 +206,3 @@ touch %{buildroot}%{_localstatedir}/lib/colord/storage.db
 %{_libdir}/pkgconfig/*.pc
 %{_datadir}/gir-1.0/*.gir
 %{_datadir}/vala/vapi/*.vapi
-
