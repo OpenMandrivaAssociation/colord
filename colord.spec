@@ -1,4 +1,3 @@
-%define _disable_rebuild_configure 1
 %define major 2
 %define privmaj 0
 %define api 1.0
@@ -118,6 +117,7 @@ export LDFLAGS='-pie -Wl,-z,now -Wl,-z,relro'
 %ifnarch %arm
 ulimit -Sv 2000000
 %endif
+./autogen.sh
 
 %configure \
 	--with-daemon-user=colord \
