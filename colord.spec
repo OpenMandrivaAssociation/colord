@@ -1,3 +1,4 @@
+%define _disable_rebuild_configure 1
 %define major 2
 %define privmaj 0
 %define api 1.0
