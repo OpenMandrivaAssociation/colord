@@ -44,7 +44,6 @@ BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(polkit-gobject-1)
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(systemd)
-BuildRequires:	pkgconfig(libsystemd-login)
 BuildRequires:	hargyllcms
 
 Requires(pre,postun):	rpm-helper
