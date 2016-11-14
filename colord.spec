@@ -121,6 +121,9 @@ export LDFLAGS='-pie -Wl,-z,now -Wl,-z,relro'
 # chunk of RAM to put the entire B-to-A tables in.
 ulimit -Sv 2000000
 %endif
+export CC=gcc
+export CXX=g++
+
 ./autogen.sh
 
 %configure \
