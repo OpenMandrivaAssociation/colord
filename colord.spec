@@ -122,6 +122,11 @@ export LDFLAGS='-pie -Wl,-z,now -Wl,-z,relro'
 ulimit -Sv 2000000
 %endif
 
+# (tpg) ugly workaround !
+# we have polkit 0.113 patched with few cherry-picks form upstream
+# so it is safe to call that 0.113 a 0.114 here
+sed -i -e 's/polkit-gobject-1 >= 0.114/polkit-gobject-1 >= 0.113/' configure*
+
 ./autogen.sh
 
 %configure \
