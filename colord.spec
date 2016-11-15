@@ -1,27 +1,25 @@
-%define	major 2
-%define	privmaj 0
-%define	api 1.0
-%define	libname %mklibname %{name} %{major}
-%define	libpriv	%mklibname colordprivate %{major}
-%define	libhug	%mklibname colorhug %{major}
-%define	girname	%mklibname %{name}-gir %{api}
-%define	girhug	%mklibname colorhug-gir %{api}
-%define	devname	%mklibname %{name} -d
-
+%define major 2
+%define privmaj 0
+%define api 1.0
+%define libname %mklibname %{name} %{major}
+%define libpriv %mklibname colordprivate %{major}
+%define libhug %mklibname colorhug %{major}
+%define girname %mklibname %{name}-gir %{api}
+%define girhug %mklibname colorhug-gir %{api}
+%define devname %mklibname %{name} -d
 
 # Building the extra print profiles requires colprof, +4Gb of RAM and
 # quite a lot of time. Don't enable this for test builds.
-%bcond_with print_profiles
+%bcond_without print_profiles
 
 # SANE is pretty insane when it comes to handling devices, and we get AVCs
 # popping up all over the place.
-%bcond_with	sane
-
+%bcond_without sane
 
 Summary:	Color daemon
 Name:		colord
-Version:	1.2.4
-Release:	6
+Version:	1.3.3
+Release:	1
 License:	GPLv2+ and LGPLv2+
 Group:		System/X11
 Url:		http://www.freedesktop.org/software/colord/
@@ -46,18 +44,18 @@ BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(polkit-gobject-1)
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(systemd)
-BuildRequires:	pkgconfig(libsystemd-login)
-
+%if %{with print_profiles}
+BuildRequires:	hargyllcms
+%endif
 Requires(pre,postun):	rpm-helper
 Requires:	shared-color-profiles
-Requires:	systemd-units
 
 # obsolete separate profiles package
-Obsoletes: shared-color-profiles <= 0.1.6-10
-Provides: shared-color-profiles
+Obsoletes:	shared-color-profiles <= 0.1.6-10
+Provides:	shared-color-profiles = %{EVRD}
 # obsolete separate profiles package
-Obsoletes: shared-color-profiles-extra <= 0.1.6-10
-Provides: shared-color-profiles-extra
+Obsoletes:	shared-color-profiles-extra <= 0.1.6-10
+Provides:	shared-color-profiles-extra = %{EVRD}
 
 %description
 colord is a low level system activated daemon that maps color devices
@@ -118,9 +116,16 @@ Files for development with %{name}.
 export CFLAGS='-fPIC %optflags'
 export LDFLAGS='-pie -Wl,-z,now -Wl,-z,relro'
 %ifnarch %arm
+# Set ~2 GiB limit so that colprof is forced to work in chunks when
+# generating the print profile rather than trying to allocate a 3.1 GiB
+# chunk of RAM to put the entire B-to-A tables in.
 ulimit -Sv 2000000
 %endif
+
+./autogen.sh
+
 %configure \
+	--enable-introspection=yes \
 	--with-daemon-user=colord \
 	--with-systemdsystemunitdir=%{_systemunitdir} \
 %if %{with print_profiles}
@@ -133,6 +138,7 @@ ulimit -Sv 2000000
         --enable-sane \
 %endif
 	--disable-rpath \
+	--disable-schemas-compile \
 	--disable-examples \
 	--disable-dependency-tracking
 
@@ -144,6 +150,11 @@ ulimit -Sv 2000000
 # databases
 touch %{buildroot}%{_localstatedir}/lib/colord/mapping.db
 touch %{buildroot}%{_localstatedir}/lib/colord/storage.db
+
+install -d %{buildroot}%{_presetdir}
+cat > %{buildroot}%{_presetdir}/86-colord.preset << EOF
+enable colord.service
+EOF
 
 %find_lang %{name}
 
@@ -185,6 +196,7 @@ touch %{buildroot}%{_localstatedir}/lib/colord/storage.db
 %attr(755,colord,colord) %dir %{_localstatedir}/lib/colord
 %attr(755,colord,colord) %dir %{_localstatedir}/lib/colord/icc
 %ghost %{_localstatedir}/lib/colord/*.db
+%{_presetdir}/86-colord.preset
 %{_systemunitdir}/*.service
 
 %files -n %{libname}
@@ -208,4 +220,3 @@ touch %{buildroot}%{_localstatedir}/lib/colord/storage.db
 %{_libdir}/pkgconfig/*.pc
 %{_datadir}/gir-1.0/*.gir
 %{_datadir}/vala/vapi/*.vapi
-
