@@ -18,7 +18,7 @@
 
 Summary:	Color daemon
 Name:		colord
-Version:	1.3.3
+Version:	1.3.5
 Release:	1
 License:	GPLv2+ and LGPLv2+
 Group:		System/X11
