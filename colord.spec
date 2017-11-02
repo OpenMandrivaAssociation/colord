@@ -18,7 +18,7 @@
 
 Summary:	Color daemon
 Name:		colord
-Version:	1.3.5
+Version:	1.4.1
 Release:	1
 License:	GPLv2+ and LGPLv2+
 Group:		System/X11
@@ -44,6 +44,7 @@ BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(polkit-gobject-1)
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(systemd)
+BuildRequires:	meson
 %if %{with print_profiles}
 BuildRequires:	hargyllcms
 %endif
@@ -125,32 +126,22 @@ ulimit -Sv 2000000
 # (tpg) ugly workaround !
 # we have polkit 0.113 patched with few cherry-picks form upstream
 # so it is safe to call that 0.113 a 0.114 here
-sed -i -e 's/polkit-gobject-1 >= 0.114/polkit-gobject-1 >= 0.113/' configure*
+sed -i -e "s/polkit.version().version_compare('>= 0.114')/polkit.version().version_compare('>= 0.114')/" meson.build
 
-./autogen.sh
-
-%configure \
-	--enable-introspection=yes \
-	--with-daemon-user=colord \
-	--with-systemdsystemunitdir=%{_systemunitdir} \
+%meson \
+    -Denable-vala \
+    -Dwith-daemon-user="colord" \
 %if %{with print_profiles}
-        --enable-print-profiles \
+    -Denable-print-profiles \
 %else
-	--disable-print-profiles \
-%endif
-	--enable-vala \
 %if %{with sane}
-        --enable-sane \
+    -Denable-sane \
 %endif
-	--disable-rpath \
-	--disable-schemas-compile \
-	--disable-examples \
-	--disable-dependency-tracking
 
-%make
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 # databases
 touch %{buildroot}%{_localstatedir}/lib/colord/mapping.db
