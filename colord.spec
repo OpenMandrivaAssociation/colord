@@ -131,12 +131,12 @@ sed -i -e "s/polkit.version().version_compare('>= 0.114')/polkit.version().versi
 %meson \
     -Dwith-daemon-user="colord" \
 %if %{with print_profiles}
-    -Denable-print-profiles \
+    -Denable-print-profiles=true \
 %endif
 %if %{with sane}
-    -Denable-sane \
+    -Denable-sane=true \
 %endif
-    -Denable-vala
+    -Denable-vala=true
 
 %meson_build
 
