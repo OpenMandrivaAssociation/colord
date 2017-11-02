@@ -129,7 +129,6 @@ ulimit -Sv 2000000
 sed -i -e "s/polkit.version().version_compare('>= 0.114')/polkit.version().version_compare('>= 0.114')/" meson.build
 
 %meson \
-    -Denable-vala \
     -Dwith-daemon-user="colord" \
 %if %{with print_profiles}
     -Denable-print-profiles \
@@ -137,6 +136,7 @@ sed -i -e "s/polkit.version().version_compare('>= 0.114')/polkit.version().versi
 %if %{with sane}
     -Denable-sane \
 %endif
+    -Denable-vala
 
 %meson_build
 
