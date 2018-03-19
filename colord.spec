@@ -174,7 +174,7 @@ EOF
 %files -f %{name}.lang
 %doc AUTHORS NEWS
 %{_datadir}/bash-completion/completions/colormgr
-#% {_sysconfdir}/dbus-1/system.d/org.freedesktop.ColorManager.conf
+%{_datadir}/dbus-1/system.d/org.freedesktop.ColorManager.conf
 /lib/udev/rules.d/*.rules
 %{_bindir}/*
 %{_libexecdir}/colord
@@ -221,7 +221,7 @@ EOF
 %{_libdir}/girepository-1.0/Colord-%{api}.typelib
 
 %files -n %{girhug}
-%{_libdir}/girepository-1.0/ColorHug-%{api}.typelib
+%{_libdir}/girepository-1.0/Colorhug-%{api}.typelib
 
 %files -n %{devname}
 %{_includedir}/colord-1
@@ -229,3 +229,4 @@ EOF
 %{_libdir}/pkgconfig/*.pc
 %{_datadir}/gir-1.0/*.gir
 %{_datadir}/vala/vapi/*.vapi
+%{_datadir}/vala/vapi/colord.deps
