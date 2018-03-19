@@ -15,6 +15,7 @@
 # SANE is pretty insane when it comes to handling devices, and we get AVCs
 # popping up all over the place.
 %bcond_without sane
+%bcond_with docs
 
 Summary:	Color daemon
 Name:		colord
@@ -131,6 +132,9 @@ sed -i -e "s/polkit.version().version_compare('>= 0.114')/polkit.version().versi
 
 %meson \
     -Dwith-daemon-user="colord" \
+%if %{with docs}
+    -Denable-docs=false \
+%endif
 %if %{with print_profiles}
     -Denable-print-profiles=true \
 %endif
