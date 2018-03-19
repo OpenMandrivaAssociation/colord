@@ -132,7 +132,7 @@ sed -i -e "s/polkit.version().version_compare('>= 0.114')/polkit.version().versi
 
 %meson \
     -Dwith-daemon-user="colord" \
-%if %{with docs}
+%if !%{with docs}
     -Denable-docs=false \
     -Denable-man=false \
 %endif
