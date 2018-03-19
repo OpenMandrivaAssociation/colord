@@ -174,7 +174,7 @@ EOF
 %files -f %{name}.lang
 %doc AUTHORS NEWS
 %{_datadir}/bash-completion/completions/colormgr
-%{_sysconfdir}/dbus-1/system.d/org.freedesktop.ColorManager.conf
+#% {_sysconfdir}/dbus-1/system.d/org.freedesktop.ColorManager.conf
 /lib/udev/rules.d/*.rules
 %{_bindir}/*
 %{_libexecdir}/colord
@@ -197,7 +197,9 @@ EOF
 %{_datadir}/dbus-1/system-services/org.freedesktop.ColorManager.service
 %{_datadir}/glib-2.0/schemas/org.freedesktop.ColorHelper.gschema.xml
 %{_datadir}/polkit-1/actions/org.freedesktop.color.policy
+%if !%{with docs}
 %{_mandir}/man1/*.1.*
+%endif
 %attr(755,colord,colord) %dir %{_localstatedir}/lib/colord
 %attr(755,colord,colord) %dir %{_localstatedir}/lib/colord/icc
 %ghost %{_localstatedir}/lib/colord/*.db
