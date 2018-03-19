@@ -115,6 +115,9 @@ Files for development with %{name}.
 %prep
 %setup -q
 
+# hack around polkit
+sed -i 's!0.114!0.113!g' meson.build
+
 %build
 export CFLAGS='-fPIC %optflags'
 export LDFLAGS='-pie -Wl,-z,now -Wl,-z,relro'
