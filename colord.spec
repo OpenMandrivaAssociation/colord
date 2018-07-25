@@ -205,7 +205,6 @@ EOF
 %ghost %{_localstatedir}/lib/colord/*.db
 %{_presetdir}/86-colord.preset
 %{_systemunitdir}/*.service
-%{_userunitdir}/*.service
 %{_tmpfilesdir}/*.conf
 
 %files -n %{libname}
