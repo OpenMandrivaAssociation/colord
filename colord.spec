@@ -19,8 +19,8 @@
 
 Summary:	Color daemon
 Name:		colord
-Version:	1.4.2
-Release:	2
+Version:	1.4.3
+Release:	1
 License:	GPLv2+ and LGPLv2+
 Group:		System/X11
 Url:		http://www.freedesktop.org/software/colord/
@@ -45,11 +45,13 @@ BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(polkit-gobject-1)
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(systemd)
+BuildRequires:	systemd-macros
 BuildRequires:	pkgconfig(libudev)
 BuildRequires:	meson
 %if %{with print_profiles}
 BuildRequires:	hargyllcms
 %endif
+BuildRequires:	rpm-helper
 Requires(pre,postun):	rpm-helper
 Requires:	shared-color-profiles
 
@@ -113,10 +115,7 @@ Provides:	%{name}-devel = %{EVRD}
 Files for development with %{name}.
 
 %prep
-%setup -q
-
-# hack around polkit
-sed -i 's!0.114!0.113!g' meson.build
+%autosetup -p1
 
 %build
 export CFLAGS='-fPIC %optflags'
@@ -127,11 +126,6 @@ export LDFLAGS='-pie -Wl,-z,now -Wl,-z,relro'
 # chunk of RAM to put the entire B-to-A tables in.
 ulimit -Sv 2000000
 %endif
-
-# (tpg) ugly workaround !
-# we have polkit 0.113 patched with few cherry-picks form upstream
-# so it is safe to call that 0.113 a 0.114 here
-sed -i -e "s/polkit.version().version_compare('>= 0.114')/polkit.version().version_compare('>= 0.114')/" meson.build
 
 %meson \
     -Dwith-daemon-user="colord" \
@@ -204,7 +198,7 @@ EOF
 %attr(755,colord,colord) %dir %{_localstatedir}/lib/colord/icc
 %ghost %{_localstatedir}/lib/colord/*.db
 %{_presetdir}/86-colord.preset
-%{_systemunitdir}/*.service
+%{_unitdir}/*.service
 %{_prefix}/lib/systemd/user/colord-session.service
 %{_tmpfilesdir}/*.conf
 
