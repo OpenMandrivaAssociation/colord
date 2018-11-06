@@ -118,8 +118,7 @@ Files for development with %{name}.
 %autosetup -p1
 
 %build
-export CFLAGS='-fPIC %optflags'
-export LDFLAGS='-pie -Wl,-z,now -Wl,-z,relro'
+
 %ifnarch %arm
 # Set ~2 GiB limit so that colprof is forced to work in chunks when
 # generating the print profile rather than trying to allocate a 3.1 GiB
@@ -128,7 +127,9 @@ ulimit -Sv 2000000
 %endif
 
 %meson \
-    -Dwith-daemon-user="colord" \
+    -Ddaemon_user="colord" \
+    -Dlibcolordcompat=true \
+    -Dvapi=true \
 %if !%{with docs}
     -Denable-docs=false \
     -Denable-man=false \
