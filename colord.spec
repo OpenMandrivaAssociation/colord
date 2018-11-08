@@ -133,6 +133,10 @@ ulimit -Sv 2000000
 %meson \
     -Dlibcolordcompat=true \
     -Dvapi=true \
+%if !%{with docs}
+    -Dman=false \
+    -Ddocs=false \
+%endif
 %if %{with print_profiles}
     -Dprint_profiles=true \
 %endif
