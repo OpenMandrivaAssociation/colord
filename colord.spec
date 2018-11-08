@@ -27,6 +27,8 @@ Url:		http://www.freedesktop.org/software/colord/
 Source0:	http://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz
 
 BuildRequires:	docbook-utils
+BuildRequires:	docbook-dtd41-sgml
+BuildRequires:	locales
 BuildRequires:	gettext
 BuildRequires:	gtk-doc
 BuildRequires:	intltool
