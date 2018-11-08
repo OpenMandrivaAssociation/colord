@@ -12,6 +12,8 @@
 # quite a lot of time. Don't enable this for test builds.
 %bcond_without print_profiles
 
+%define _disable_ld_no_undefined 1
+
 # SANE is pretty insane when it comes to handling devices, and we get AVCs
 # popping up all over the place.
 %bcond_without sane
@@ -129,20 +131,15 @@ ulimit -Sv 2000000
 %endif
 
 %meson \
-    -Ddaemon_user="colord" \
     -Dlibcolordcompat=true \
     -Dvapi=true \
-%if !%{with docs}
-    -Denable-docs=false \
-    -Denable-man=false \
-%endif
 %if %{with print_profiles}
-    -Denable-print-profiles=true \
+    -Dprint_profiles=true \
 %endif
 %if %{with sane}
-    -Denable-sane=true \
+    -Dsane=true \
 %endif
-    -Denable-vala=true
+    -Ddaemon_user="colord"
 
 %meson_build
 
