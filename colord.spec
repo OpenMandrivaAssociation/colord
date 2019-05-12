@@ -133,6 +133,7 @@ ulimit -Sv 2000000
 %meson \
     -Dlibcolordcompat=true \
     -Dvapi=true \
+    -Dtests=false \
 %if !%{with docs}
     -Dman=false \
     -Ddocs=false \
