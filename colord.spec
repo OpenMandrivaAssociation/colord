@@ -144,7 +144,7 @@ ulimit -Sv 2000000
 %if %{with sane}
     -Dsane=true \
 %endif
-    -Ddaemon_user="colord"
+    -Ddaemon_user="colord" || cat meson-logs/meson-log.txt
 
 %meson_build
 
