@@ -123,12 +123,7 @@ Files for development with %{name}.
 
 %build
 
-%ifnarch %arm
-# Set ~2 GiB limit so that colprof is forced to work in chunks when
-# generating the print profile rather than trying to allocate a 3.1 GiB
-# chunk of RAM to put the entire B-to-A tables in.
-ulimit -Sv 2000000
-%endif
+ulimit -Sv 20000000
 
 %meson \
     -Dlibcolordcompat=true \
