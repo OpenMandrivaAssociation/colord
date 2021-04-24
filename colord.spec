@@ -22,12 +22,12 @@
 Summary:	Color daemon
 Name:		colord
 Version:	1.4.5
-Release:	2
+Release:	3
 License:	GPLv2+ and LGPLv2+
 Group:		System/X11
 Url:		http://www.freedesktop.org/software/colord/
 Source0:	http://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz
-
+Source1:	%{name}.sysusers
 BuildRequires:	docbook-utils
 BuildRequires:	docbook-dtd41-sgml
 BuildRequires:	locales
@@ -55,10 +55,8 @@ BuildRequires:	meson
 %if %{with print_profiles}
 BuildRequires:	hargyllcms
 %endif
-BuildRequires:	rpm-helper
-Requires(pre,postun):	rpm-helper
 Requires:	shared-color-profiles
-
+%systemd_requires
 # obsolete separate profiles package
 Obsoletes:	shared-color-profiles <= 0.1.6-10
 Provides:	shared-color-profiles = %{EVRD}
@@ -150,6 +148,8 @@ ulimit -Sv 20000000
 touch %{buildroot}%{_localstatedir}/lib/colord/mapping.db
 touch %{buildroot}%{_localstatedir}/lib/colord/storage.db
 
+install -D -p -m 644 %{SOURCE1} %{buildroot}%{_sysusersdir}/%{name}.conf
+
 install -d %{buildroot}%{_presetdir}
 cat > %{buildroot}%{_presetdir}/86-colord.preset << EOF
 enable colord.service
@@ -157,13 +157,14 @@ EOF
 
 %find_lang %{name}
 
-%pre
-%_pre_useradd colord /var/lib/colord /sbin/nologin
-%_pre_groupadd colord colord
+%post
+%systemd_post colord.service
+
+%preun
+%systemd_preun colord.service
 
 %postun
-%_postun_userdel colord
-%_postun_groupdel colord
+%systemd_postun colord.service
 
 %files -f %{name}.lang
 %doc AUTHORS NEWS
@@ -201,6 +202,7 @@ EOF
 %{_unitdir}/*.service
 %{_prefix}/lib/systemd/user/colord-session.service
 %{_tmpfilesdir}/*.conf
+%{_sysusersdir}/%{name}.conf
 
 %files -n %{libname}
 %{_libdir}/libcolord.so.%{major}*
