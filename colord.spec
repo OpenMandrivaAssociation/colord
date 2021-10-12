@@ -19,6 +19,8 @@
 %bcond_without sane
 %bcond_with docs
 
+%global optflags %{optflags} -O2
+
 Summary:	Color daemon
 Name:		colord
 Version:	1.4.5
