@@ -51,7 +51,7 @@ BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(polkit-gobject-1)
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(systemd)
-BuildRequires:	systemd-macros
+BuildRequires:	systemd-rpm-macros
 BuildRequires:	pkgconfig(libudev)
 BuildRequires:	meson
 %if %{with print_profiles}
