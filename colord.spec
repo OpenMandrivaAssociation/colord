@@ -24,7 +24,7 @@
 Summary:	Color daemon
 Name:		colord
 Version:	1.4.6
-Release:	2
+Release:	3
 License:	GPLv2+ and LGPLv2+
 Group:		System/X11
 Url:		http://www.freedesktop.org/software/colord/
@@ -172,7 +172,7 @@ EOF
 %doc AUTHORS NEWS
 %{_datadir}/bash-completion/completions/colormgr
 %{_datadir}/dbus-1/system.d/org.freedesktop.ColorManager.conf
-/lib/udev/rules.d/*.rules
+%{_udevrulesdir}/*.rules
 %{_bindir}/*
 %{_libexecdir}/colord
 %if %{with sane}
@@ -195,7 +195,7 @@ EOF
 %{_datadir}/glib-2.0/schemas/org.freedesktop.ColorHelper.gschema.xml
 %{_datadir}/polkit-1/actions/org.freedesktop.color.policy
 %if %{with docs}
-%{_mandir}/man1/*.1.*
+%doc %{_mandir}/man1/*.1.*
 %endif
 %attr(755,colord,colord) %dir %{_localstatedir}/lib/colord
 %attr(755,colord,colord) %dir %{_localstatedir}/lib/colord/icc
