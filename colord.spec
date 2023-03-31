@@ -24,7 +24,7 @@
 Summary:	Color daemon
 Name:		colord
 Version:	1.4.6
-Release:	5
+Release:	6
 License:	GPLv2+ and LGPLv2+
 Group:		System/X11
 Url:		http://www.freedesktop.org/software/colord/
