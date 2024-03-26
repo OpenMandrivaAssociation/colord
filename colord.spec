@@ -24,11 +24,11 @@
 Summary:	Color daemon
 Name:		colord
 Version:	1.4.7
-Release:	1
+Release:	2
 License:	GPLv2+ and LGPLv2+
 Group:		System/X11
-Url:		http://www.freedesktop.org/software/colord/
-Source0:	http://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz
+Url:		https://www.freedesktop.org/software/colord/
+Source0:	https://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz
 Source1:	%{name}.sysusers
 BuildRequires:	docbook-utils
 BuildRequires:	docbook-dtd41-sgml
