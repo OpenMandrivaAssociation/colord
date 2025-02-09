@@ -30,7 +30,7 @@ Group:		System/X11
 Url:		https://www.freedesktop.org/software/colord/
 Source0:	https://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz
 Source1:	%{name}.sysusers
-Patch0:    fix-service.spec
+Patch0:		fix-service.patch
 BuildRequires:	docbook-utils
 BuildRequires:	docbook-dtd41-sgml
 BuildRequires:	locales
@@ -196,7 +196,7 @@ EOF
 %{_datadir}/glib-2.0/schemas/org.freedesktop.ColorHelper.gschema.xml
 %{_datadir}/polkit-1/actions/org.freedesktop.color.policy
 %if %{with docs}
-%doc %{_mandir}/man1/*.1.*
+%doc %{_mandir}/man1/*.1*
 %endif
 %attr(755,colord,colord) %dir %{_localstatedir}/lib/colord
 %attr(755,colord,colord) %dir %{_localstatedir}/lib/colord/icc
