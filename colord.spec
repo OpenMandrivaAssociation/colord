@@ -30,6 +30,7 @@ Group:		System/X11
 Url:		https://www.freedesktop.org/software/colord/
 Source0:	https://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz
 Source1:	%{name}.sysusers
+Patch0:    fix-service.spec
 BuildRequires:	docbook-utils
 BuildRequires:	docbook-dtd41-sgml
 BuildRequires:	locales
