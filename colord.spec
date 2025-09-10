@@ -195,6 +195,7 @@ EOF
 %{_datadir}/dbus-1/system-services/org.freedesktop.ColorManager.service
 %{_datadir}/glib-2.0/schemas/org.freedesktop.ColorHelper.gschema.xml
 %{_datadir}/polkit-1/actions/org.freedesktop.color.policy
+%{_datadir}/metainfo/org.freedesktop.colord.metainfo.xml
 %if %{with docs}
 %doc %{_mandir}/man1/*.1*
 %endif
@@ -206,6 +207,7 @@ EOF
 %{_prefix}/lib/systemd/user/colord-session.service
 %{_tmpfilesdir}/*.conf
 %{_sysusersdir}/%{name}.conf
+%{_sysusersdir}/colord-sysusers.conf
 
 %files -n %{libname}
 %{_libdir}/libcolord.so.%{major}*
